@@ -5,6 +5,8 @@ public class NPC_Actions : MonoBehaviour
 {
     private NavMeshAgent agent;
 
+    public bool isComplete = false;
+
     public bool isFollower;
     
     public Transform playerTransform;
@@ -37,8 +39,10 @@ public class NPC_Actions : MonoBehaviour
 
     public void FollowPlayer()
     {
-        if (isFollower && agent != null)
+        if (isFollower && agent != null && isComplete == false)
             agent.destination = playerTransform.position;
+        else if (isComplete)
+            agent = null;
     }
 
     public void PlayAnimation(string animationName)

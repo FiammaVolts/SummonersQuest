@@ -1530,6 +1530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d01422654b9d3479d4fab999e3c3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isComplete: 0
   isFollower: 0
   playerTransform: {fileID: 0}
   npcName: Guard
@@ -1547,7 +1548,7 @@ MonoBehaviour:
     cold times. Have mercy and leave at once.
   askForQuest: 'So... you are back...
 
-    I will let you enter if you have with you somethig useful for the village.'
+    I will let you enter if you have with you something useful for the village.'
   thankyou: 'Woow, you did bring wood for us.
 
     You may enter. Thank you so much!'
@@ -5962,6 +5963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d01422654b9d3479d4fab999e3c3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isComplete: 0
   isFollower: 0
   playerTransform: {fileID: 0}
   npcName: Little Girl
@@ -5971,7 +5973,7 @@ MonoBehaviour:
   - {fileID: 1935140908}
   givesQuest: "My brother said he was going to pick up something for me, but he didn't
     come back yet. \nWhat if something happened to him?"
-  askForQuest: Did you find him miss? I'm worried about him...
+  askForQuest: Did you find him? I'm worried about him...
   thankyou: Daniel!! You're back! Thank you miss!!!
   givesClue: So, you came here looking for an old man? I heard his house is somewhere
     after the bridge.
@@ -9364,6 +9366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93d01422654b9d3479d4fab999e3c3e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isComplete: 0
   isFollower: 1
   playerTransform: {fileID: 654495604}
   npcName: Lost Child

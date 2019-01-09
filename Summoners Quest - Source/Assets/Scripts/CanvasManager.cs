@@ -83,6 +83,10 @@ public class CanvasManager : MonoBehaviour
         dialoguePanel.SetActive(true);
     }
 
+    public string GetQuestDialogue() {
+        return dialogueText.text;
+    }
+
     public void ClearAllInventorySlotIcons()
     {
         for (int i = 0; i < inventoryIcons.Length; ++i)
