@@ -5,6 +5,7 @@ public class CanvasManager : MonoBehaviour
 {
     private static CanvasManager _instance;
 
+    public Player player;
     public GameObject interactionPanel;
     public Text interactionText;
     public GameObject dialoguePanel;
@@ -12,9 +13,9 @@ public class CanvasManager : MonoBehaviour
     public GameObject npcPanel;
     public Text npcName;
     public GameObject inventoryPanel;
-    public Image[] inventoryIcons;
+    public Image[] inventoryIcons;    
 
-    public static CanvasManager instance 
+    public static CanvasManager instance
     {
         get { return _instance; }
     }
@@ -65,6 +66,7 @@ public class CanvasManager : MonoBehaviour
     public void HideDialoguePanel()
     {
         dialoguePanel.SetActive(false);
+        player.gameObject.SetActive(true);
     }
 
     public void ShowInventory()
@@ -81,9 +83,11 @@ public class CanvasManager : MonoBehaviour
     {
         dialogueText.text = text;
         dialoguePanel.SetActive(true);
+        player.gameObject.SetActive(false);
     }
 
-    public string GetQuestDialogue() {
+    public string GetQuestDialogue()
+    {
         return dialogueText.text;
     }
 
