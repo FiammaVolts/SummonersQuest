@@ -13,7 +13,8 @@ public class CanvasManager : MonoBehaviour
     public GameObject npcPanel;
     public Text npcName;
     public GameObject inventoryPanel;
-    public Image[] inventoryIcons;    
+    public Image[] inventoryIcons;
+    public GameObject inventoryPage;
 
     public static CanvasManager instance
     {
@@ -107,6 +108,16 @@ public class CanvasManager : MonoBehaviour
     {
         inventoryIcons[slotIndex].sprite = icon;
         inventoryIcons[slotIndex].enabled = true;
+    }
+
+    public void ShowInventoryPage()
+    {
+        inventoryPage.SetActive(true);
+    }
+
+    public void HideInventoryPage()
+    {
+        inventoryPage.SetActive(false);
     }
 
 }

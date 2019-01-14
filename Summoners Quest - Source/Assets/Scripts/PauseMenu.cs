@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour {
+public class PauseMenu : MonoBehaviour
+{
 
     public static bool GameIsPaused = false;
 
@@ -13,43 +14,53 @@ public class PauseMenu : MonoBehaviour {
     private CanvasManager _canvasManager;
 
 
-    private void Start() {
+    private void Start()
+    {
         _canvasManager = CanvasManager.instance;
     }
 
-    // Update is called once per frame
-    void Update () {
-		if(Input.GetKeyDown(KeyCode.Escape)) {
-            if(GameIsPaused) {                
-                player.gameObject.SetActive(true);                
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameIsPaused)
+            {
                 Resume();
             }
-            else {
-                _canvasManager.HideInventory();
-                player.gameObject.SetActive(false);                
+            else
+            {
                 Pause();
             }
         }
-	}
+    }
 
-    public void Resume() {
+    public void Resume()
+    {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         GameIsPaused = false;
+        _canvasManager.ShowInventory();
+        player.GetComponentInChildren<Camera>().enabled = true;
     }
 
-    void Pause() {
+    void Pause()
+    {
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        Cursor.visible = true;
+        _canvasManager.HideInventory();
+        player.GetComponentInChildren<Camera>().enabled = false;
     }
 
-    public void LoadMenu() {
+    public void LoadMenu()
+    {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Menu");
     }
 
-    public void QuitGame() {
+    public void QuitGame()
+    {
         Debug.Log("Quit game");
         Application.Quit();
     }
