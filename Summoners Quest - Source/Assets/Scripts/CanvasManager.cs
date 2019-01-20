@@ -14,7 +14,7 @@ public class CanvasManager : MonoBehaviour
     public Text npcName;
     public GameObject inventoryPanel;
     public Image[] inventoryIcons;
-    public GameObject inventoryPage;
+    public GameObject recipePage;
 
     public static CanvasManager instance
     {
@@ -38,8 +38,14 @@ public class CanvasManager : MonoBehaviour
         HideInteractionPanel();
         HideNpcName();
         HideDialoguePanel();
+        recipePage.SetActive(false);
 
         ClearAllInventorySlotIcons();
+    }
+
+    private void Update()
+    {
+        ShowRecipePage();
     }
 
     public void HideInteractionPanel()
@@ -110,14 +116,21 @@ public class CanvasManager : MonoBehaviour
         inventoryIcons[slotIndex].enabled = true;
     }
 
-    public void ShowInventoryPage()
+    public void ShowRecipePage()
     {
-        inventoryPage.SetActive(true);
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log("tab");
+            if (!recipePage.activeSelf)
+            {
+                Debug.Log(recipePage);
+                recipePage.SetActive(true);
+            }
+            else
+            {
+                Debug.Log(recipePage);
+                recipePage.SetActive(false);
+            }
+        }        
     }
-
-    public void HideInventoryPage()
-    {
-        inventoryPage.SetActive(false);
-    }
-
 }

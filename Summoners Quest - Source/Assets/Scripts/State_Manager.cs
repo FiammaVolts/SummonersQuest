@@ -5,9 +5,11 @@ using UnityEngine;
 public class State_Manager : MonoBehaviour
 {
     public Player player;
+    public NPC_Actions _npc;
 
     private NPC_State _currentStateSister;
     private NPC_State _currentStateGuard;
+    private NPC_State _currentStateChildM;
     private NPC_Actions _currentNpc;
     private Interactible _currentInteractible;
     private CanvasManager _canvasManager;
@@ -19,6 +21,8 @@ public class State_Manager : MonoBehaviour
         _currentInteractible = null;
 
         _currentStateSister = NPC_State.State_GivesQuest;
+
+        _currentStateChildM = NPC_State.State_GivesQuest;
 
         _currentStateGuard = NPC_State.State_GivesQuest;        
     }
@@ -190,7 +194,9 @@ public class State_Manager : MonoBehaviour
                                         _canvasManager.HideInventory();
                                     }
 
+                                    _npc.isComplete = false;
                                     _currentStateSister = NPC_State.State_AskForQuest;
+                                    _currentStateChildM = NPC_State.State_AskForQuest;
                                 }
                             }
                         }
@@ -208,8 +214,9 @@ public class State_Manager : MonoBehaviour
                                 _canvasManager.ShowQuestDialogue(_currentNpc.thankyou);
                                 _canvasManager.HideInventory();
                             }
+                            
+                            _npc.isComplete = true;
 
-                            _currentNpc.isComplete = true;
                             _currentStateSister = NPC_State.State_GivesClue;
                         }
                         break;
@@ -231,14 +238,83 @@ public class State_Manager : MonoBehaviour
                         break;
                 }
             }
-        }
-    }
+            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("ChildM"))
+            {
+                switch (_currentStateChildM)
+                {
+                    case NPC_State.State_GivesQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager != null)
+                            {
+                                if (_currentStateSister == NPC_State.State_GivesQuest) {
+                                    if (_canvasManager.GetQuestDialogue() == _currentNpc.givesQuest)
+                                    {
+                                        _canvasManager.HideDialoguePanel();
+                                        _canvasManager.ShowInventory();
+                                    }
+                                    else
+                                    {
+                                        _canvasManager.HideNpcName();
+                                        _canvasManager.ShowQuestDialogue(_currentNpc.givesQuest);
+                                        _canvasManager.HideInventory();
+                                    }
+                                }
+                                else if(_currentStateSister == NPC_State.State_AskForQuest)
+                                    _currentStateChildM = NPC_State.State_AskForQuest;
 
-    private IEnumerator TimeDialogueBox()
-    {
-        yield return new WaitForSecondsRealtime(7);
-        _canvasManager.HideDialoguePanel();
-        _canvasManager.ShowInventory();
-        StopAllCoroutines();
+                            }                            
+                        }
+                        break;
+
+                    case NPC_State.State_AskForQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("ChildM"))
+                            {
+                                if (_currentStateSister == NPC_State.State_AskForQuest)
+                                {
+                                    if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest)
+                                    {
+                                        _canvasManager.HideDialoguePanel();
+                                        _canvasManager.ShowInventory();
+                                    }
+                                    else
+                                    {
+                                        _canvasManager.HideNpcName();
+                                        _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
+                                        _canvasManager.HideInventory();
+                                        if (_currentNpc.isComplete == false)
+                                            _currentNpc.isFollower = true;
+                                    }
+                                }
+                                else if(_currentStateSister == NPC_State.State_ThankYou ||
+                                    _currentStateSister == NPC_State.State_GivesClue)
+
+                                    _currentStateChildM = NPC_State.State_ThankYou;
+                            }
+                        }
+                        break;
+
+                    case NPC_State.State_ThankYou:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager.GetQuestDialogue() == _currentNpc.thankyou)
+                            {
+                                _canvasManager.HideDialoguePanel();
+                                _canvasManager.ShowInventory();
+                            }
+                            else
+                            {
+                                _canvasManager.HideNpcName();
+                                _canvasManager.ShowQuestDialogue(_currentNpc.thankyou);
+                                _canvasManager.HideInventory();
+                            }
+                        }
+                        break;
+                }
+            }
+
+        }
     }
 }

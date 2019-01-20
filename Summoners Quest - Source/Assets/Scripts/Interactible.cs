@@ -11,12 +11,11 @@ public class Interactible : MonoBehaviour
     
     public Interactible[] indirectInteractibles;
     public Interactible[] indirectActivations;
+   
 
     public void Activate()
     {
         isActive = true;
-
-        PlayAnimation("Activate");
     }
 
     public void Interact()
@@ -29,8 +28,6 @@ public class Interactible : MonoBehaviour
 
     private void InteractActive()
     {
-        PlayAnimation("InteractActive");
-
         InteractIndirects();
 
         ActivateIndirects();
@@ -69,5 +66,4 @@ public class Interactible : MonoBehaviour
                 indirectActivations[i].Activate();
         }
     }
-
 }

@@ -9,13 +9,13 @@ public class Player : MonoBehaviour
 
     public float maxInteractionDistance;
     public int inventorySize;
-    
-    private NPC_Actions        _currentNpc;
-    private NPC_State          _currentState;
-    private CanvasManager      _canvasManager;
-    private Camera             _camera;
-    private RaycastHit         _raycastHit;
-    private Interactible       _currentInteractible;
+
+    private NPC_Actions _currentNpc;
+    private NPC_State _currentState;
+    private CanvasManager _canvasManager;
+    private Camera _camera;
+    private RaycastHit _raycastHit;
+    private Interactible _currentInteractible;
     private List<Interactible> _inventory;
 
     public static Player instance {
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         _camera = GetComponentInChildren<Camera>();
 
         _currentInteractible = null;
-        
+
         _currentNpc = null;
 
         _inventory = new List<Interactible>(inventorySize);
@@ -110,13 +110,6 @@ public class Player : MonoBehaviour
             else if (HasRequirements(_currentInteractible))
                 Interact(_currentInteractible);
         }
-        else if(Input.GetMouseButtonDown(0) && _currentNpc != null)
-        {
-            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("ChildM") && _currentNpc.isFollower == false)
-            {
-                _currentNpc.isFollower = true;
-            }
-        }
     }
 
     private void SetInteractible(Interactible newInteractible)
@@ -132,7 +125,7 @@ public class Player : MonoBehaviour
 
         _canvasManager.HideInteractionPanel();
     }
-    
+
     private void SetNpc(NPC_Actions newNpc)
     {
         _currentNpc = newNpc;

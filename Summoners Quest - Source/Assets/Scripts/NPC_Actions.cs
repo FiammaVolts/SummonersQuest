@@ -5,15 +5,16 @@ public class NPC_Actions : MonoBehaviour
 {
     private NavMeshAgent agent;
 
-    public bool isComplete = false;
+    public bool isComplete;
 
-    public bool isFollower;
+    public  bool isFollower;
     
     public Transform playerTransform;
     public string npcName;
 
     public bool consumesRequirements;
     public Interactible[] inventoryRequirements;
+    //Para a criança
     public NPC_Actions[] actionRequirements;
 
     [TextArea(3,10)]
@@ -33,7 +34,7 @@ public class NPC_Actions : MonoBehaviour
 
     private void Update()
     {
-        if(isFollower)
+        if (isFollower)
             FollowPlayer();
     }
 

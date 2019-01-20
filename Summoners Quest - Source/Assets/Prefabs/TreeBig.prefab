@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114298135358534964}
   m_Layer: 0
   m_Name: Wood
-  m_TagString: Untagged
+  m_TagString: wood
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,14 +65,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1765942144417964}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -179.34439, y: 4.29, z: -21.59198}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalRotation: {x: -0.6532815, y: 0.27059805, z: 0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: 4.7, y: 1.8600001, z: -1.7}
+  m_LocalScale: {x: 3, y: 3.000002, z: 3.000002}
   m_Children:
   - {fileID: 4369085897473212}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 45, z: 0}
 --- !u!23 &23824277507431914
 MeshRenderer:
   m_ObjectHideFlags: 1
