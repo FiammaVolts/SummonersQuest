@@ -43,11 +43,6 @@ public class CanvasManager : MonoBehaviour
         ClearAllInventorySlotIcons();
     }
 
-    private void Update()
-    {
-        ShowRecipePage();
-    }
-
     public void HideInteractionPanel()
     {
         interactionPanel.SetActive(false);

@@ -1,22 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class NPC_Actions : MonoBehaviour
 {
     private NavMeshAgent agent;
 
     public bool isComplete;
+    public bool isFollower;
+    public bool isActive;
 
-    public  bool isFollower;
-    
     public Transform playerTransform;
     public string npcName;
 
     public bool consumesRequirements;
-    public Interactible[] inventoryRequirements;
+    public Dictionary<Interactible_type, int> inventoryRequirements;
     //Para a criança
     public NPC_Actions[] actionRequirements;
 
+    public Interactible_type[] inventoryReq;
+    public int[] reqCount;
+    
     [TextArea(3,10)]
     public string givesQuest;
     [TextArea(3, 10)]
@@ -30,12 +34,28 @@ public class NPC_Actions : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         isFollower = false;
+        inventoryRequirements = new Dictionary<Interactible_type, int>();
+
+        if (inventoryReq.Length != reqCount.Length)
+            Debug.LogError("Tamanhos diferentes");
+
+        for (int i = 0; i < reqCount.Length; i++)
+        {
+            inventoryRequirements[inventoryReq[i]] = reqCount[i];
+        }
     }
 
     private void Update()
     {
         if (isFollower)
             FollowPlayer();
+
+        isActive = false;
+    }
+
+    public void Activate()
+    {
+        isActive = true;
     }
 
     public void FollowPlayer()

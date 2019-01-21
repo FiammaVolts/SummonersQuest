@@ -2,28 +2,21 @@
 
 public class Interactible : MonoBehaviour
 {
-    public bool isInteractive;
-    public bool isActive;
+    public bool isInteractive;    
     public bool isPickable;
     public bool allowsMultipleInteractions;
     public Sprite inventoryIcon;
     public string interactionText;
+    public Interactible_type type;
     
     public Interactible[] indirectInteractibles;
-    public Interactible[] indirectActivations;
-   
+    public NPC_Actions[] indirectActivations;
 
-    public void Activate()
-    {
-        isActive = true;
-    }
 
     public void Interact()
     {
-        if (isActive)
+        if (indirectActivations[0].isActive)
             InteractActive();
-        else
-            InteractInactive();
     }
 
     private void InteractActive()
@@ -36,19 +29,7 @@ public class Interactible : MonoBehaviour
             isInteractive = false;
     }
 
-    private void InteractInactive()
-    {
-        PlayAnimation("InteractInactive");
-    }
-
-    private void PlayAnimation(string animationName)
-    {
-        Animator animator = GetComponent<Animator>();
-
-        if (animator != null)
-            animator.SetTrigger(animationName);
-    }
-
+    // Verifica se tem todos os requisitos
     private void InteractIndirects()
     {
         if (indirectInteractibles != null)
@@ -58,6 +39,7 @@ public class Interactible : MonoBehaviour
         }
     }
 
+    //Ativa NPC
     private void ActivateIndirects()
     {
         if (indirectActivations != null)

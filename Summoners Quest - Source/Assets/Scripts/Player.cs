@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class Player : MonoBehaviour
 {
@@ -142,9 +143,13 @@ public class Player : MonoBehaviour
 
     public bool HasRequirements(Interactible interactible)
     {
-        for (int i = 0; i < _currentNpc.inventoryRequirements.Length; ++i)
-            if (!HasInInventory(_currentNpc.inventoryRequirements[i]))
+        foreach (Interactible_type type in _currentNpc.inventoryRequirements.Keys)
+        {
+            if (!HasInInventory(type))
+            {
                 return false;
+            }
+        }
 
         return true;
     }
@@ -164,8 +169,11 @@ public class Player : MonoBehaviour
     {
         if (_currentNpc.consumesRequirements)
         {
-            for (int i = 0; i < _currentNpc.inventoryRequirements.Length; ++i)
-                RemoveFromInventory(_currentNpc.inventoryRequirements[i]);
+            foreach (KeyValuePair<Interactible_type, int> typeCount in _currentNpc.inventoryRequirements)
+            {
+                for (int i = 0; i < typeCount.Value; i++)
+                    RemoveFromInventory(typeCount.Key);
+            }
         }
 
         interactible.Interact();
@@ -182,14 +190,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool HasInInventory(Interactible pickable)
+    private bool HasInInventory(Interactible_type pickable)
     {
-        return _inventory.Contains(pickable);
+        foreach (Interactible item in _inventory)
+        {
+            if (item.type == pickable)
+                return true;
+        }
+
+        return false;
     }
 
-    private void RemoveFromInventory(Interactible pickable)
+    private void RemoveFromInventory(Interactible_type interType)
     {
-        _inventory.Remove(pickable);
+        Interactible inter = _inventory.Find(it => it.type == interType);
+
+        if (inter != null)
+            _inventory.Remove(inter);
 
         UpdateInventoryIcons();
     }
