@@ -44,6 +44,8 @@ public class State_Manager : MonoBehaviour
         {
             _canvasManager.ShowRecipePage();
         }
+
+        CheatMethod();
     }
 
     private void DefineState()
@@ -536,6 +538,30 @@ public class State_Manager : MonoBehaviour
                         break;
                 }
             }
+        }
+    }
+
+    private void CheatMethod()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _currentStateGuard = NPC_State.State_GivesClue;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _currentStateSister = NPC_State.State_GivesClue;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _currentStateVillager = NPC_State.State_GivesClue;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            _currentStateWomen = NPC_State.State_GivesClue;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            player.transform.position = new Vector3();
         }
     }
 }

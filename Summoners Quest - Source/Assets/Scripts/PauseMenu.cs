@@ -55,9 +55,9 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadMenu()
     {
-        Time.timeScale = 1f;
-        Cursor.visible = true;
+        Time.timeScale = 1f;        
         SceneManager.LoadScene("Menu");
+        Cursor.visible = true;
     }
 
     public void QuitGame()
