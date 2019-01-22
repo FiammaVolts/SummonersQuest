@@ -226,6 +226,7 @@ public class State_Manager : MonoBehaviour
                             
                             _npc.isComplete = true;
 
+                            _currentNpc.PlayAnimation("GirlHappy");
                             _currentStateSister = NPC_State.State_GivesClue;
                         }
                         break;

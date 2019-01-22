@@ -48,8 +48,10 @@ public class NPC_Actions : MonoBehaviour
 
     private void Update()
     {
-        if (isFollower)
-            FollowPlayer();        
+        if (isFollower) {
+            PlayAnimation("BoyRun");
+            FollowPlayer();            
+        }
     }
 
     public void FollowPlayer()

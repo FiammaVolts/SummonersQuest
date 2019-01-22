@@ -8,5 +8,6 @@ public enum Interactible_type {
     Red,
     Purple,
     Recipe,
-    Fish
+    Fish,
+    Ruby
 }
