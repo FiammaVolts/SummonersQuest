@@ -6,11 +6,13 @@ public class State_Manager : MonoBehaviour
 {
     public Player player;
     public NPC_Actions _npc;
+    public NPC_Actions _npc2;
 
     private NPC_State _currentStateSister;
     private NPC_State _currentStateGuard;
     private NPC_State _currentStateChildM;
     private NPC_State _currentStateVillager;
+    private NPC_State _currentStateWomen;
     private NPC_Actions _currentNpc;
     private Interactible _currentInteractible;
     private CanvasManager _canvasManager;
@@ -22,12 +24,12 @@ public class State_Manager : MonoBehaviour
         _currentInteractible = null;
 
         _currentStateSister = NPC_State.State_GivesQuest;
-
         _currentStateChildM = NPC_State.State_GivesQuest;
-
         _currentStateGuard = NPC_State.State_GivesQuest;
-
         _currentStateVillager = NPC_State.State_GivesQuest;
+        _currentStateWomen = NPC_State.State_GivesQuest;
+
+        _npc2.transform.GetChild(1).gameObject.SetActive(false);
     }
 
     void Update()
@@ -40,6 +42,11 @@ public class State_Manager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
             DefineState();
+
+        if(_npc2.transform.GetChild(1).gameObject.activeSelf == true)
+        {
+            _canvasManager.ShowRecipePage();
+        }
     }
 
     private void DefineState()
@@ -101,7 +108,7 @@ public class State_Manager : MonoBehaviour
                                         _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
                                         _canvasManager.HideInventory();                                       
                                     }
-
+                                                                        
                                     _currentStateGuard = NPC_State.State_AskForQuest;
                                 }
                             }
@@ -119,7 +126,6 @@ public class State_Manager : MonoBehaviour
                                 _canvasManager.HideNpcName();
                                 _canvasManager.ShowQuestDialogue(_currentNpc.thankyou);
                                 _canvasManager.HideInventory();
-                                _currentNpc.PlayAnimation("move");
                             }
                             
                             _currentStateGuard = NPC_State.State_GivesClue;
@@ -381,6 +387,7 @@ public class State_Manager : MonoBehaviour
                                         _canvasManager.HideInventory();
                                     }
 
+                                    _npc2.transform.GetChild(1).gameObject.SetActive(true);
                                     _currentStateVillager = NPC_State.State_AskForQuest;
                                 }
                             }
@@ -402,7 +409,116 @@ public class State_Manager : MonoBehaviour
                                 _canvasManager.HideInventory();
                             }
 
+                            _currentNpc.isActive = false;
                             _currentStateVillager = NPC_State.State_GivesClue;
+                        }
+                        break;
+
+                    case NPC_State.State_GivesClue:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager.GetQuestDialogue() == _currentNpc.givesClue)
+                            {
+                                _canvasManager.HideDialoguePanel();
+                                _canvasManager.ShowInventory();
+                            }
+                            else
+                            {
+                                _canvasManager.HideNpcName();
+                                _canvasManager.ShowQuestDialogue(_currentNpc.givesClue);
+                                _canvasManager.HideInventory();
+                            }
+
+                            _npc2.transform.GetChild(1).gameObject.SetActive(false);
+                        }
+                        break;
+                }
+            }
+
+            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("Women"))
+            {
+                switch (_currentStateWomen)
+                {
+                    case NPC_State.State_GivesQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager != null)
+                            {
+                                if (_canvasManager.GetQuestDialogue() == _currentNpc.givesQuest)
+                                {
+                                    _canvasManager.HideDialoguePanel();
+                                    _canvasManager.ShowInventory();
+                                }
+                                else
+                                {
+                                    _canvasManager.HideNpcName();
+                                    _canvasManager.ShowQuestDialogue(_currentNpc.givesQuest);
+                                    _canvasManager.HideInventory();
+                                }
+                            }
+
+                            _currentStateWomen = NPC_State.State_AskForQuest;
+                        }
+                        break;
+
+                    case NPC_State.State_AskForQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("Women"))
+                            {
+                                if (player.HasRequirements(_currentInteractible))
+                                {
+                                    if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest)
+                                    {
+                                        _canvasManager.HideDialoguePanel();
+                                        _canvasManager.ShowInventory();
+                                    }
+                                    else
+                                    {
+                                        _canvasManager.HideNpcName();
+                                        _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
+                                        _canvasManager.HideInventory();
+                                    }
+
+                                    _canvasManager.ClearAllInventorySlotIcons();
+                                    _currentStateWomen = NPC_State.State_ThankYou;
+                                }
+                                else
+                                {
+                                    if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest)
+                                    {
+                                        _canvasManager.HideDialoguePanel();
+                                        _canvasManager.ShowInventory();
+                                    }
+                                    else
+                                    {
+                                        _canvasManager.HideNpcName();
+                                        _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
+                                        _canvasManager.HideInventory();
+                                    }
+
+                                    _currentStateWomen = NPC_State.State_AskForQuest;
+                                }
+                            }
+                        }
+                        break;
+
+                    case NPC_State.State_ThankYou:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager.GetQuestDialogue() == _currentNpc.thankyou)
+                            {
+                                _canvasManager.HideDialoguePanel();
+                                _canvasManager.ShowInventory();
+                            }
+                            else
+                            {
+                                _canvasManager.HideNpcName();
+                                _canvasManager.ShowQuestDialogue(_currentNpc.thankyou);
+                                _canvasManager.HideInventory();
+                            }
+
+                            _currentStateWomen = NPC_State.State_GivesClue;
                         }
                         break;
 

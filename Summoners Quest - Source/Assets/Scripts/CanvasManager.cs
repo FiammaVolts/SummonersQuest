@@ -115,15 +115,12 @@ public class CanvasManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            Debug.Log("tab");
             if (!recipePage.activeSelf)
             {
-                Debug.Log(recipePage);
                 recipePage.SetActive(true);
             }
             else
             {
-                Debug.Log(recipePage);
                 recipePage.SetActive(false);
             }
         }        

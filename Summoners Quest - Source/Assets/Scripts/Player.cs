@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Linq;
 
 public class Player : MonoBehaviour
 {
@@ -52,6 +51,8 @@ public class Player : MonoBehaviour
         CheckForInteractible();
         CheckForInteractionClick();
         CheckForNPC();
+
+        //Debug.Log(_inventory.Count);
     }
 
     public NPC_Actions GetNPC()
@@ -143,13 +144,19 @@ public class Player : MonoBehaviour
 
     public bool HasRequirements(Interactible interactible)
     {
-        foreach (Interactible_type type in _currentNpc.inventoryRequirements.Keys)
-        {
-            if (!HasInInventory(type))
-            {
-                return false;
-            }
-        }
+        //foreach (Interactible_type type in _currentNpc.inventoryRequirements.Keys)
+        //{
+        //    if (!HasInInventory(type))
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        //return true;
+        if (_currentNpc != null)
+            for (int i = 0; i < _currentNpc.inventoryRequirements.Length; ++i)
+                if (!HasInInventory(_currentNpc.inventoryRequirements[i]))
+                    return false;
 
         return true;
     }
@@ -157,26 +164,39 @@ public class Player : MonoBehaviour
     public bool HasNPC(NPC_Actions sister)
     {
         for (int i = 0; i < sister.actionRequirements.Length; ++i)
-        {
             if (sister.actionRequirements[i].isFollower == true)
                 return false;
-        }
 
         return true;
     }
 
     private void Interact(Interactible interactible)
     {
-        if (_currentNpc.consumesRequirements)
+        //if (_currentNpc.consumesRequirements)
+        //{
+        //    foreach (KeyValuePair<Interactible_type, int> typeCount in _currentNpc.inventoryRequirements)
+        //    {
+        //        for (int i = 0; i < typeCount.Value; i++)
+        //            RemoveFromInventory(typeCount.Key);
+        //    }
+        //}
+        if (_currentNpc != null)
         {
-            foreach (KeyValuePair<Interactible_type, int> typeCount in _currentNpc.inventoryRequirements)
+            if (_currentNpc.consumesRequirements)
             {
-                for (int i = 0; i < typeCount.Value; i++)
-                    RemoveFromInventory(typeCount.Key);
+                for (int i = 0; i < _currentNpc.inventoryRequirements.Length; ++i)
+                    RemoveFromInventory(_currentNpc.inventoryRequirements[i]);
+            }
+        } else if(_currentInteractible != null)
+        {
+            for (int i = 0; i < _currentInteractible.inventoryRequirements.Length; ++i)
+            {
+                RemoveFromInventory(_currentInteractible.inventoryRequirements[i]);
+                _currentNpc.isActive = true;
             }
         }
 
-        interactible.Interact();
+        //interactible.Interact();
     }
 
     private void AddToInventory(Interactible pickable)
@@ -199,6 +219,30 @@ public class Player : MonoBehaviour
         }
 
         return false;
+
+        //int n = 0;
+
+        //if (_inventory.Count > 0) return false;
+
+        //for (int i = 0; i < _inventory.Count; i++)
+        //{
+        //    if (_inventory[i].type == pickable)
+        //    {
+        //        n++;
+
+        //        if (n == _currentNpc.inventoryRequirements.Length)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            continue;
+        //        }
+        //    }
+        //}
+
+        //return false;
+
     }
 
     private void RemoveFromInventory(Interactible_type interType)
@@ -209,6 +253,10 @@ public class Player : MonoBehaviour
             _inventory.Remove(inter);
 
         UpdateInventoryIcons();
+
+        //_inventory.Remove(interType);
+
+        //UpdateInventoryIcons();
     }
 
     private void UpdateInventoryIcons()

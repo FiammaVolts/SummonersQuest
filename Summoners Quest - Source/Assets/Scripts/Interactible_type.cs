@@ -6,5 +6,7 @@ public enum Interactible_type {
 
 	Wood,
     Red,
-    Purple
+    Purple,
+    Recipe,
+    Fish
 }

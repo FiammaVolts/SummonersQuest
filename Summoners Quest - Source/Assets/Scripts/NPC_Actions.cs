@@ -14,12 +14,13 @@ public class NPC_Actions : MonoBehaviour
     public string npcName;
 
     public bool consumesRequirements;
-    public Dictionary<Interactible_type, int> inventoryRequirements;
+    //public Dictionary<Interactible_type, int> inventoryRequirements;
+    public Interactible_type[] inventoryRequirements;
     //Para a criança
     public NPC_Actions[] actionRequirements;
 
-    public Interactible_type[] inventoryReq;
-    public int[] reqCount;
+    //public Interactible_type[] inventoryReq;
+    //public int[] reqCount;
     
     [TextArea(3,10)]
     public string givesQuest;
@@ -34,23 +35,21 @@ public class NPC_Actions : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         isFollower = false;
-        inventoryRequirements = new Dictionary<Interactible_type, int>();
+        //inventoryRequirements = new Dictionary<Interactible_type, int>();
 
-        if (inventoryReq.Length != reqCount.Length)
-            Debug.LogError("Tamanhos diferentes");
+        //if (inventoryReq.Length != reqCount.Length)
+        //    Debug.LogError("Tamanhos diferentes");
 
-        for (int i = 0; i < reqCount.Length; i++)
-        {
-            inventoryRequirements[inventoryReq[i]] = reqCount[i];
-        }
+        //for (int i = 0; i < reqCount.Length; i++)
+        //{
+        //    inventoryRequirements[inventoryReq[i]] = reqCount[i];
+        //}
     }
 
     private void Update()
     {
         if (isFollower)
-            FollowPlayer();
-
-        isActive = false;
+            FollowPlayer();        
     }
 
     public void Activate()

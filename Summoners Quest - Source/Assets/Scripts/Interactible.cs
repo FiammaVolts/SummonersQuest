@@ -5,11 +5,12 @@ public class Interactible : MonoBehaviour
     public bool isInteractive;    
     public bool isPickable;
     public bool allowsMultipleInteractions;
+    public bool consumesRequirements;
     public Sprite inventoryIcon;
     public string interactionText;
     public Interactible_type type;
-    
-    public Interactible[] indirectInteractibles;
+
+    public Interactible_type[] inventoryRequirements;
     public NPC_Actions[] indirectActivations;
 
 
@@ -19,9 +20,9 @@ public class Interactible : MonoBehaviour
             InteractActive();
     }
 
-    private void InteractActive()
+    public void InteractActive()
     {
-        InteractIndirects();
+        //InteractIndirects();
 
         ActivateIndirects();
 
@@ -29,15 +30,15 @@ public class Interactible : MonoBehaviour
             isInteractive = false;
     }
 
-    // Verifica se tem todos os requisitos
-    private void InteractIndirects()
-    {
-        if (indirectInteractibles != null)
-        {
-            for (int i = 0; i < indirectInteractibles.Length; ++i)
-                indirectInteractibles[i].Interact();
-        }
-    }
+    //// Verifica se tem todos os requisitos
+    //private void InteractIndirects()
+    //{
+    //    if (indirectInteractibles != null)
+    //    {
+    //        for (int i = 0; i < indirectInteractibles.Length; ++i)
+    //            Interact();
+    //    }
+    //}
 
     //Ativa NPC
     private void ActivateIndirects()
