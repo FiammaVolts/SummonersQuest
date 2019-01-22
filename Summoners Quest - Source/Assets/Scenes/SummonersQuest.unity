@@ -27523,6 +27523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInteractionDistance: 1.8
   inventorySize: 6
+  npc: {fileID: 496045227}
 --- !u!1001 &654788314
 Prefab:
   m_ObjectHideFlags: 0

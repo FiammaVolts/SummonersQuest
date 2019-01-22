@@ -52,11 +52,6 @@ public class NPC_Actions : MonoBehaviour
             FollowPlayer();        
     }
 
-    public void Activate()
-    {
-        isActive = true;
-    }
-
     public void FollowPlayer()
     {
         if (isFollower && agent != null && isComplete == false)

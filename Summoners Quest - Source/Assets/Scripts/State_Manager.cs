@@ -14,15 +14,12 @@ public class State_Manager : MonoBehaviour
     private NPC_State _currentStateVillager;
     private NPC_State _currentStateWomen;
     private NPC_Actions _currentNpc;
-    private Interactible _currentInteractible;
     private CanvasManager _canvasManager;
 
     void Start()
     {
         _canvasManager = CanvasManager.instance;
-
-        _currentInteractible = null;
-
+        
         _currentStateSister = NPC_State.State_GivesQuest;
         _currentStateChildM = NPC_State.State_GivesQuest;
         _currentStateGuard = NPC_State.State_GivesQuest;
@@ -82,7 +79,8 @@ public class State_Manager : MonoBehaviour
                         {
                             if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("Guard"))
                             {
-                                if (player.HasRequirements(_currentInteractible))
+                                if (player.HasInInventory(_currentNpc.inventoryRequirements[0], 
+                                    _currentNpc.inventoryRequirements.Length))
                                 {
                                     if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest) {
                                         _canvasManager.HideDialoguePanel();
@@ -94,7 +92,6 @@ public class State_Manager : MonoBehaviour
                                         _canvasManager.HideInventory();                                                                            
                                     }
 
-                                    _canvasManager.ClearAllInventorySlotIcons();
                                     _currentStateGuard = NPC_State.State_ThankYou;
                                 }
                                 else
@@ -369,8 +366,7 @@ public class State_Manager : MonoBehaviour
                                         _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
                                         _canvasManager.HideInventory();
                                     }
-
-                                    _canvasManager.ClearAllInventorySlotIcons();
+                                    
                                     _currentStateVillager = NPC_State.State_ThankYou;
                                 }
                                 else
@@ -466,7 +462,8 @@ public class State_Manager : MonoBehaviour
                         {
                             if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("Women"))
                             {
-                                if (player.HasRequirements(_currentInteractible))
+                                if (player.HasInInventory(_currentNpc.inventoryRequirements[0],
+                                    _currentNpc.inventoryRequirements.Length))
                                 {
                                     if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest)
                                     {
@@ -479,8 +476,7 @@ public class State_Manager : MonoBehaviour
                                         _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
                                         _canvasManager.HideInventory();
                                     }
-
-                                    _canvasManager.ClearAllInventorySlotIcons();
+                                    
                                     _currentStateWomen = NPC_State.State_ThankYou;
                                 }
                                 else
