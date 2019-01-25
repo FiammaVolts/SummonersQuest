@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class State_Manager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class State_Manager : MonoBehaviour
     private NPC_State _currentStateChildM;
     private NPC_State _currentStateVillager;
     private NPC_State _currentStateWomen;
+    private NPC_State _currentStateOldMan;
+    private NPC_State _currentStateDragon;
     private NPC_Actions _currentNpc;
     private CanvasManager _canvasManager;
 
@@ -25,6 +28,8 @@ public class State_Manager : MonoBehaviour
         _currentStateGuard = NPC_State.State_GivesQuest;
         _currentStateVillager = NPC_State.State_GivesQuest;
         _currentStateWomen = NPC_State.State_GivesQuest;
+        _currentStateOldMan = NPC_State.State_GivesQuest;
+        _currentStateDragon = NPC_State.State_GivesQuest;
 
         _npc2.transform.GetChild(1).gameObject.SetActive(false);
     }
@@ -226,7 +231,8 @@ public class State_Manager : MonoBehaviour
                             
                             _npc.isComplete = true;
 
-                            _currentNpc.PlayAnimation("GirlHappy");
+                            
+                            _currentNpc.PlayAnimation("GirlHappy", true);
                             _currentStateSister = NPC_State.State_GivesClue;
                         }
                         break;
@@ -295,7 +301,9 @@ public class State_Manager : MonoBehaviour
                                         _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
                                         _canvasManager.HideInventory();
                                         if (_currentNpc.isComplete == false)
+                                        {
                                             _currentNpc.isFollower = true;
+                                        }
                                     }
                                 }
                                 else if(_currentStateSister == NPC_State.State_ThankYou ||
@@ -408,7 +416,7 @@ public class State_Manager : MonoBehaviour
                                 _canvasManager.HideInventory();
                             }
 
-                            _currentNpc.isActive = false;
+                            _currentNpc.isActive = false;                            
                             _currentStateVillager = NPC_State.State_GivesClue;
                         }
                         break;
@@ -428,6 +436,7 @@ public class State_Manager : MonoBehaviour
                                 _canvasManager.HideInventory();
                             }
 
+                            _currentNpc.PlayAnimation("Thankful", true);
                             _npc2.transform.GetChild(1).gameObject.SetActive(false);
                         }
                         break;
@@ -539,6 +548,202 @@ public class State_Manager : MonoBehaviour
                         break;
                 }
             }
+
+            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("OldMan"))
+            {
+                switch (_currentStateOldMan)
+                {
+                    case NPC_State.State_GivesQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager != null)
+                            {
+                                if (_canvasManager.GetQuestDialogue() == _currentNpc.givesQuest)
+                                {
+                                    _canvasManager.HideDialoguePanel();
+                                    _canvasManager.ShowInventory();
+                                }
+                                else
+                                {
+                                    _canvasManager.HideNpcName();
+                                    _canvasManager.ShowQuestDialogue(_currentNpc.givesQuest);
+                                    _canvasManager.HideInventory();
+                                }
+                            }
+
+                            _currentStateOldMan = NPC_State.State_AskForQuest;
+                        }
+                        break;
+
+                    case NPC_State.State_AskForQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("OldMan"))
+                            {
+                                    if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest)
+                                    {
+                                        _canvasManager.HideDialoguePanel();
+                                        _canvasManager.ShowInventory();
+                                    }
+                                    else
+                                    {
+                                        _canvasManager.HideNpcName();
+                                        _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
+                                        _canvasManager.HideInventory();
+                                    }
+
+                                    _currentStateOldMan = NPC_State.State_ThankYou;
+                            }
+                        }
+                        break;
+
+                    case NPC_State.State_ThankYou:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager.GetQuestDialogue() == _currentNpc.thankyou)
+                            {
+                                _canvasManager.HideDialoguePanel();
+                                _canvasManager.ShowInventory();
+                            }
+                            else
+                            {
+                                _canvasManager.HideNpcName();
+                                _canvasManager.ShowQuestDialogue(_currentNpc.thankyou);
+                                _canvasManager.HideInventory();
+                            }
+
+                            _currentStateOldMan = NPC_State.State_GivesClue;
+                        }
+                        break;
+
+                    case NPC_State.State_GivesClue:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager.GetQuestDialogue() == _currentNpc.givesClue)
+                            {
+                                _canvasManager.HideDialoguePanel();
+                                _canvasManager.ShowInventory();
+                            }
+                            else
+                            {
+                                _canvasManager.HideNpcName();
+                                _canvasManager.ShowQuestDialogue(_currentNpc.givesClue);
+                                _canvasManager.HideInventory();
+                            }
+                        }
+                        break;
+                }
+            }
+
+            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("Dragon"))
+            {
+                switch (_currentStateDragon)
+                {
+                    case NPC_State.State_GivesQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager != null)
+                            {
+                                if (_canvasManager.GetQuestDialogue() == _currentNpc.givesQuest)
+                                {
+                                    _canvasManager.HideDialoguePanel();
+                                    _canvasManager.ShowInventory();
+                                }
+                                else
+                                {
+                                    _canvasManager.HideNpcName();
+                                    _canvasManager.ShowQuestDialogue(_currentNpc.givesQuest);
+                                    _canvasManager.HideInventory();
+                                }
+                            }
+
+                            _currentStateDragon = NPC_State.State_AskForQuest;
+                        }
+                        break;
+
+                    case NPC_State.State_AskForQuest:
+                        if (_currentNpc != null)
+                        {
+                            if (_currentNpc.gameObject.layer == LayerMask.NameToLayer("Dragon"))
+                            {
+                                if (player.HasInInventory(_currentNpc.inventoryRequirements[0],
+                                    _currentNpc.inventoryRequirements.Length))
+                                {
+                                    if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest)
+                                    {
+                                        _canvasManager.HideDialoguePanel();
+                                        _canvasManager.ShowInventory();
+                                    }
+                                    else
+                                    {
+                                        _canvasManager.HideNpcName();
+                                        _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
+                                        _canvasManager.HideInventory();
+                                    }
+
+                                    _currentNpc.GetComponent<AudioSource>().Play();
+                                    _currentStateDragon = NPC_State.State_ThankYou;
+                                }
+                                else
+                                {
+                                    if (_canvasManager.GetQuestDialogue() == _currentNpc.askForQuest)
+                                    {
+                                        _canvasManager.HideDialoguePanel();
+                                        _canvasManager.ShowInventory();
+                                    }
+                                    else
+                                    {
+                                        _canvasManager.HideNpcName();
+                                        _canvasManager.ShowQuestDialogue(_currentNpc.askForQuest);
+                                        _canvasManager.HideInventory();
+                                    }
+
+                                    _currentStateDragon = NPC_State.State_AskForQuest;
+                                }
+                            }
+                        }
+                        break;
+
+                    case NPC_State.State_ThankYou:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager.GetQuestDialogue() == _currentNpc.thankyou)
+                            {
+                                _canvasManager.HideDialoguePanel();
+                                _canvasManager.ShowInventory();
+                            }
+                            else
+                            {
+                                _canvasManager.HideNpcName();
+                                _canvasManager.ShowQuestDialogue(_currentNpc.thankyou);
+                                _canvasManager.HideInventory();
+                            }
+
+                            _currentStateDragon = NPC_State.State_GivesClue;
+                        }
+                        break;
+
+                    case NPC_State.State_GivesClue:
+                        if (_currentNpc != null)
+                        {
+                            if (_canvasManager.GetQuestDialogue() == _currentNpc.givesClue)
+                            {
+                                _canvasManager.HideDialoguePanel();
+                                _canvasManager.ShowInventory();
+                            }
+                            else
+                            {
+                                _canvasManager.HideNpcName();
+                                _canvasManager.ShowQuestDialogue(_currentNpc.givesClue);
+                                _canvasManager.HideInventory();
+
+                                _canvasManager.HideDialoguePanel();
+                                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                            }
+                        }
+                        break;
+                }
+            }
         }
     }
 
@@ -560,9 +765,13 @@ public class State_Manager : MonoBehaviour
         {
             _currentStateWomen = NPC_State.State_GivesClue;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            player.transform.position = new Vector3();
+            player.transform.position = new Vector3(-31.947f, 13.168f, -55.283f);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            player.transform.position = new Vector3(57.5f, 55.0f, 66.8f);
         }
     }
 }

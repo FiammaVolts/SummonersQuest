@@ -212,6 +212,7 @@ public class Player : MonoBehaviour
             _inventory.Add(pickable);
             pickable.gameObject.SetActive(false);
 
+            GetComponent<AudioSource>().Play();
             UpdateInventoryIcons();
         }
     }

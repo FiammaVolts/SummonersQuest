@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class NPC_Actions : MonoBehaviour
 {
     private NavMeshAgent agent;
+    private bool isRunning = false;
+    private bool isIdle = false;
 
     public bool isComplete;
     public bool isFollower;
@@ -49,8 +51,19 @@ public class NPC_Actions : MonoBehaviour
     private void Update()
     {
         if (isFollower) {
-            PlayAnimation("BoyRun");
+            if (!isRunning)
+            {
+                PlayAnimation("BoyRun", true);
+                isRunning = true;
+            }
             FollowPlayer();            
+        }
+        else
+        {
+            if (!isIdle)
+            {
+                PlayAnimation("BoyRun", false);
+            }
         }
     }
 
@@ -62,11 +75,11 @@ public class NPC_Actions : MonoBehaviour
             agent = null;
     }
 
-    public void PlayAnimation(string animationName)
+    public void PlayAnimation(string animationName, bool isAnimated)
     {
-        Animator animator = GetComponent<Animator>();
+        Animator animator = GetComponentInChildren<Animator>();
 
-        if (animator != null)
-            animator.SetTrigger(animationName);
+        //if (animator != null)
+        animator.SetBool(animationName, isAnimated);
     }
 }
