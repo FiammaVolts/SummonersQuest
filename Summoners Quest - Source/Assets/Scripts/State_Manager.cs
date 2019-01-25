@@ -416,7 +416,8 @@ public class State_Manager : MonoBehaviour
                                 _canvasManager.HideInventory();
                             }
 
-                            _currentNpc.isActive = false;                            
+                            _currentNpc.isActive = false;
+                            _canvasManager.recipePage.SetActive(false);
                             _currentStateVillager = NPC_State.State_GivesClue;
                         }
                         break;
