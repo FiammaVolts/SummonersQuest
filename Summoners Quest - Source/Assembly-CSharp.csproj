@@ -61,7 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\HolyShift\Scripts\CheckForStandardAssets.cs" />
+    <Compile Include="Assets\Malbers Animations\Common\Scripts\Utility\ChangeTarget.cs" />
+    <Compile Include="Assets\Malbers Animations\Common\Scripts\Utility\Compatible SA\AbstractTargetFollower.cs" />
+    <Compile Include="Assets\Malbers Animations\Common\Scripts\Utility\Compatible SA\FreeLookCam.cs" />
     <Compile Include="Assets\Scripts\CanvasManager.cs" />
+    <Compile Include="Assets\Scripts\Credits.cs" />
     <Compile Include="Assets\Scripts\Interactible.cs" />
     <Compile Include="Assets\Scripts\Interactible_type.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
@@ -70,6 +74,7 @@
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\State_Manager.cs" />
+    <Compile Include="Assets\Scripts\SwitchSounds.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\HolyShift\readme.txt" />
