@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Interactible_type {
+/// <summary>
+/// Enumeration for the interactible objects
+/// </summary>
+public enum InteractibleType {
 
 	Wood,
     Red,
